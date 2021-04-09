@@ -1,0 +1,32 @@
+{
+  "name": "nagato",
+  "version": "1.0.0",
+  "description": "A native osu! bancho packet reader made with the benefits of C++",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build:dev": "node-gyp -j 16 build --debug",
+    "build": "node-gyp -j 16 build",
+    "rebuild:dev": "node-gyp -j 16 rebuild --debug",
+    "rebuild": "node-gyp -j 16 rebuild",
+    "clean": "node-gyp clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kuragarimoe/nagato.git"
+  },
+  "keywords": [
+    "osu!",
+    "packets"
+  ],
+  "author": "Akashi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kuragarimoe/nagato/issues"
+  },
+  "homepage": "https://github.com/kuragarimoe/nagato#readme",
+  "gypfile": true,
+  "dependencies": {
+    "nan": "^2.14.2"
+  }
+}

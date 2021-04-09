@@ -1,0 +1,1 @@
+const NagatoSrc = require("./build/Release/nagato-src");
