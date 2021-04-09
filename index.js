@@ -1,1 +1,2 @@
-const NagatoSrc = require("./build/Release/nagato-src");
+// NAGATO
+module.exports = require("./build/Release/nagatosrc");
