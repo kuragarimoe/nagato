@@ -14,21 +14,25 @@ using v8::Object;
 using v8::String;
 using v8::Value;
 
-namespace nagato {
-    class Packet : public node::ObjectWrap {
+namespace nagato
+{
+    class Packet : public node::ObjectWrap
+    {
     public:
         static void init(Local<Object> exports);
 
-    private:
-        explicit Packet();
-        ~Packet();
-
         // properties
-        char* buffer;
+        char *buffer;
         int offset;
 
+    private:
+        explicit Packet();
+        explicit Packet(char *buffer);
+        ~Packet();
+
         // constructor
-        static void create(const v8::FunctionCallbackInfo<v8::Value>& args);
+        static void create(const FunctionCallbackInfo<v8::Value> &args);
+        static void write(const FunctionCallbackInfo<Value> &args);
     };
 }
 

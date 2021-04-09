@@ -1,5 +1,6 @@
 #include <node.h>
 #include <node_object_wrap.h>
+#include <nan.h>
 
 #include "packet.h"
 
@@ -21,6 +22,11 @@ namespace nagato {
         this->buffer = new char[0]();
     }
 
+    Packet::Packet(char* buffer) {
+        this->offset = 0;
+        this->buffer = buffer;
+    }
+
     Packet::~Packet() {
         // empty
     }
@@ -40,6 +46,7 @@ namespace nagato {
         tpl->InstanceTemplate()->SetInternalFieldCount(0);
 
         // Prototype
+        NODE_SET_PROTOTYPE_METHOD(tpl, "write", Packet::write);
 
         // constructor
         Local<Function> constructor = tpl->GetFunction(context).ToLocalChecked();
@@ -72,7 +79,26 @@ namespace nagato {
             args.GetReturnValue().Set(args.This());
         } else {
             // handle a buffer
-            Nan::MaybeLocal<v8::Object> buf = Nan::NewBuffer()(args[0]->ToObject());
+            char* buf = (char*)node::Buffer::Data(args[0]);
+
+            //  pass the buffer to the constructor
+            Packet* obj = new Packet(buf);
+
+            // wrap object around the arguments
+            obj->Wrap(args.This());
+
+            // then return it
+            args.GetReturnValue().Set(args.This());
         }
+    }
+
+    // functions
+    void Packet::write(const FunctionCallbackInfo<Value>& args) {
+        // grab packet class
+        Packet* obj = ObjectWrap::Unwrap<Packet>(args.This());
+
+        // return the brand new buffer
+        args.GetReturnValue().Set(Nan::NewBuffer(obj->buffer, sizeof(obj->buffer)).ToLocalChecked());
+        return;
     }
 }
